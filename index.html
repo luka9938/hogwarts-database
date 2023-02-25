@@ -21,8 +21,23 @@
       >
         <option value="alt" disabled selected hidden>Gender</option>
         <option value="all">All</option>
-        <option value="boy">Boys</option>
-        <option value="girl">Girls</option>
+        <option value="Boy">Boys</option>
+        <option value="Girl">Girls</option>
+      </select>
+      <select
+        class="filter"
+        data-action="filter"
+        data-filter="house"
+        name="house"
+        id="house"
+        onchange="filterHouse(this)"
+      >
+        <option value="alt" disabled selected hidden>House</option>
+        <option value="all">All</option>
+        <option value="Gryffindor">Gryffindor</option>
+        <option value="Hufflepuff">Hufflepuff</option>
+        <option value="Ravenclaw">Ravenclaw</option>
+        <option value="Slytherin">Slytherin</option>
       </select>
       <button class="filter" data-action="filter" data-filter="star">
         Only Stars
@@ -38,8 +53,22 @@
           <th data-action="sort" data-sort-direction="asc" data-sort="star">
             Inquisitorial squad
           </th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="fullname">
-            Fullname
+          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">
+            Lastname
+          </th>
+          <th
+            data-action="sort"
+            data-sort-direction="asc"
+            data-sort="firstname"
+          >
+            Firstname
+          </th>
+          <th
+            data-action="sort"
+            data-sort-direction="asc"
+            data-sort="middlename"
+          >
+            Middlename
           </th>
           <th data-action="sort" data-sort-direction="asc" data-sort="gender">
             Gender
@@ -57,7 +86,9 @@
     <template id="student">
       <tr>
         <td data-field="star">☆</td>
-        <td data-field="fullname">FULLNAME</td>
+        <td data-field="lastname">LASTNAME</td>
+        <td data-field="firstname">FIRSTNAME</td>
+        <td data-field="middlename">MIDDLENAME</td>
         <td data-field="gender">GENDER</td>
         <td data-field="house">HOUSE</td>
       </tr>

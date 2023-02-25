@@ -3,6 +3,7 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
+let filterSelectedGender = "all";
 
 // The prototype for all students:
 const Student = {
@@ -79,9 +80,6 @@ function setFilter(filter) {
 
 function filterList(filteredList) {
   switch (settings.filterBy) {
-    case "gender":
-      filteredList = allStudents.filter(genderName);
-      break;
     case "star":
       filteredList = allStudents.filter(isStar);
       break;
@@ -90,22 +88,6 @@ function filterList(filteredList) {
       break;
   }
   return filteredList;
-}
-
-let genderToggle = 0;
-const selectedGenderFilter = document.querySelector(`[data-filter='gender']`);
-
-function genderName(student) {
-  genderToggle++;
-  if (genderToggle === 1) {
-    selectedGenderFilter.innerHTML = "Boys";
-  } else if (genderToggle === 2) {
-    selectedGenderFilter.innerHTML = "Girls";
-  } else {
-    selectedGenderFilter.innerHTML = "Gender";
-    genderToggle = 0;
-  }
-  return student.gender;
 }
 
 function isStar(student) {
@@ -131,6 +113,11 @@ function selectSort(event) {
   }
   console.log(`User selected ${sortBy} - ${sortDir}`);
   setSort(sortBy, sortDir);
+}
+
+function filterGender(target) {
+  filterSelectedGender = target.value;
+  buildList();
 }
 
 function setSort(sortBy, sortDir) {
@@ -182,27 +169,11 @@ function displayStudent(student) {
     .content.cloneNode(true);
 
   // set clone data
+  if (filterSelectedGender != "all" && student.gender != filterSelectedGender)
+    return;
   clone.querySelector("[data-field=fullname]").textContent = student.fullname;
   clone.querySelector("[data-field=house]").textContent = student.house;
-  switch (genderToggle) {
-    case 0:
-      clone.querySelector("[data-field=gender]").textContent = student.gender;
-      break;
-    case 1:
-      if (student.gender) {
-        clone.querySelector("[data-field=gender]").textContent = "boy";
-      } else {
-        clone.querySelector("[data-field=gender]").textContent = "girl";
-      }
-      break;
-    case 2:
-      if (student.gender) {
-        clone.querySelector("[data-field=gender]").textContent = "girl";
-      } else {
-        clone.querySelector("[data-field=gender]").textContent = "boy";
-      }
-      break;
-  }
+  clone.querySelector("[data-field=gender]").textContent = student.gender;
   if (student.star) {
     clone.querySelector("[data-field=star]").textContent = "⭐";
   } else {

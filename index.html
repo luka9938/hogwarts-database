@@ -5,26 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Studentbase</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <h1>Students</h1>
     <p>
       Filter:
-      <button class="filter" data-action="filter" data-filter="gender">Gender</button>
-      <button class="filter" data-action="filter" data-filter="star">Only Stars</button>
+      <select
+        class="filter"
+        data-action="filter"
+        data-filter="gender"
+        name="gender"
+        id="gender"
+        onchange="filterGender(this)"
+      >
+        <option value="alt" disabled selected hidden>Gender</option>
+        <option value="all">All</option>
+        <option value="boy">Boys</option>
+        <option value="girl">Girls</option>
+      </select>
+      <button class="filter" data-action="filter" data-filter="star">
+        Only Stars
+      </button>
       <button class="filter" data-action="filter" data-filter="*">all</button>
     </p>
 
-    <hr>
+    <hr />
 
     <table id="list">
       <thead>
         <tr id="sorting">
-          <th data-action="sort" data-sort-direction="asc" data-sort="star">Inquisitorial squad</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="fullname">Fullname</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="star">
+            Inquisitorial squad
+          </th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="fullname">
+            Fullname
+          </th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="gender">
+            Gender
+          </th>
+          <th data-action="sort" data-sort-direction="asc" data-sort="house">
+            House
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -41,7 +63,6 @@
       </tr>
     </template>
 
-    
     <script src="script.js"></script>
   </body>
 </html>

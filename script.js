@@ -36,6 +36,8 @@ function registerButtons() {
   document
     .querySelectorAll("[data-action='sort']")
     .forEach((button) => button.addEventListener("click", selectSort));
+
+  document.querySelector("#search-btn").addEventListener("click", search);
 }
 
 async function loadJSON() {
@@ -169,6 +171,20 @@ function sortList(sortedList) {
   });
 
   return sortedList;
+}
+
+function search() {
+  const searchTerm = document
+    .querySelector("#search")
+    .value.trim()
+    .toLowerCase();
+
+  const filteredList = allStudents.filter((student) => {
+    const fullname = `${student.firstName} ${student.lastName}`;
+    return fullname.toLowerCase().includes(searchTerm);
+  });
+
+  displayList(filteredList);
 }
 
 function buildList() {

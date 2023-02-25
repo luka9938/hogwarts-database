@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 let allStudents = [];
 
-// The protogender for all students:
+// The prototype for all students:
 const Student = {
   fullname: "",
   house: "-unknown house-",
@@ -13,7 +13,7 @@ const Student = {
 };
 
 const settings = {
-  filter: "all",
+  filterBy: "all",
   sortBy: "fullname",
   sortDir: "asc",
 };
@@ -57,6 +57,7 @@ function prepareObject(jsonObject) {
   const student = Object.create(Student);
 
   const texts = jsonObject.fullname.split(" ");
+  student.fullname = jsonObject.fullname;
   student.firstname = texts[0];
   student.house = jsonObject.house;
   student.gender = jsonObject.gender;
@@ -79,7 +80,7 @@ function setFilter(filter) {
 function filterList(filteredList) {
   switch (settings.filterBy) {
     case "gender":
-      filteredList = allStudents.filter(genderFilter);
+      filteredList = allStudents.filter(genderName);
       break;
     case "star":
       filteredList = allStudents.filter(isStar);
@@ -91,24 +92,20 @@ function filterList(filteredList) {
   return filteredList;
 }
 
-function genderFilter(student) {
-  let selectedGenderFilter = document.querySelector(
-    `[data-filter='gender']`
-  ).textContent;
-  switch (selectedGenderFilter) {
-    case "Gender":
-      console.log("boys");
-      selectedGenderFilter = "Boys";
-      return student.gender === "boy";
-    case "Boys":
-      console.log("girls");
-      selectedGenderFilter = "Boys";
-      return student.gender === "girl";
-    case "Girls":
-      console.log("reset");
-      selectedGenderFilter = "Gender";
-      return filteredList;
+let genderToggle = 0;
+const selectedGenderFilter = document.querySelector(`[data-filter='gender']`);
+
+function genderName(student) {
+  genderToggle++;
+  if (genderToggle === 1) {
+    selectedGenderFilter.innerHTML = "Boys";
+  } else if (genderToggle === 2) {
+    selectedGenderFilter.innerHTML = "Girls";
+  } else {
+    selectedGenderFilter.innerHTML = "Gender";
+    genderToggle = 0;
   }
+  return student.gender;
 }
 
 function isStar(student) {
@@ -128,7 +125,7 @@ function selectSort(event) {
 
   // toggle the direction!
   if (sortDir === "asc") {
-    event.target.dataset.sortDirection = "house";
+    event.target.dataset.sortDirection = "desc";
   } else {
     event.target.dataset.sortDirection = "asc";
   }
@@ -143,12 +140,11 @@ function setSort(sortBy, sortDir) {
 }
 
 function sortList(sortedList) {
-  // let sortedList = allStudents;
   let direction = 1;
-  if (settings.sortDir === "house") {
+  if (settings.sortDir === "desc") {
     direction = -1;
   } else {
-    settings.direction = 1;
+    settings.sortDir = "asc";
   }
 
   sortedList = sortedList.sort(sortByProperty);
@@ -188,8 +184,26 @@ function displayStudent(student) {
   // set clone data
   clone.querySelector("[data-field=fullname]").textContent = student.fullname;
   clone.querySelector("[data-field=house]").textContent = student.house;
-  clone.querySelector("[data-field=gender]").textContent = student.gender;
-  if (student.star === true) {
+  switch (genderToggle) {
+    case 0:
+      clone.querySelector("[data-field=gender]").textContent = student.gender;
+      break;
+    case 1:
+      if (student.gender) {
+        clone.querySelector("[data-field=gender]").textContent = "boy";
+      } else {
+        clone.querySelector("[data-field=gender]").textContent = "girl";
+      }
+      break;
+    case 2:
+      if (student.gender) {
+        clone.querySelector("[data-field=gender]").textContent = "girl";
+      } else {
+        clone.querySelector("[data-field=gender]").textContent = "boy";
+      }
+      break;
+  }
+  if (student.star) {
     clone.querySelector("[data-field=star]").textContent = "⭐";
   } else {
     clone.querySelector("[data-field=star]").textContent = "☆";
@@ -198,12 +212,11 @@ function displayStudent(student) {
   clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
 
   function clickStar() {
-    if (student.star === true) {
+    if (student.star) {
       student.star = false;
     } else {
       student.star = true;
     }
-
     buildList();
   }
 

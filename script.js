@@ -5,6 +5,7 @@ window.addEventListener("DOMContentLoaded", start);
 let allStudents = [];
 let filterSelectedGender = "all";
 let filterSelectedHouse = "all";
+let filterSelectedBlood = "all";
 
 // The prototype for all students:
 const Student = {
@@ -45,14 +46,12 @@ async function loadJSON() {
     "https://petlatkea.dk/2021/hogwarts/students.json"
   );
   const jsonData = await response.json();
-
   // when loaded, prepare data objects
   prepareObjects(jsonData);
 }
 
 function prepareObjects(jsonData) {
   allStudents = jsonData.map(prepareObject);
-
   // fixed so we filter and sort on the first load
   buildList();
 }
@@ -84,6 +83,7 @@ function prepareObject(jsonObject) {
     student.nicknames = nicknameParts.map((nickname) => nickname.slice(1, -1));
   } else if (nameParts.length === 2) {
     student.middleName = null;
+    student.nicknames = null;
   }
   student.house = capitalize(jsonObject.house);
   student.gender = capitalize(jsonObject.gender);
@@ -98,7 +98,11 @@ function selectFilter(event) {
 }
 
 function setFilter(filter) {
-  settings.filterBy = filter;
+  if (filter === "search") {
+    settings.filterBy = "search";
+  } else {
+    settings.filterBy = filter;
+  }
   buildList();
 }
 
@@ -125,6 +129,11 @@ function filterGender(target) {
 
 function filterHouse(target) {
   filterSelectedHouse = target.value;
+  buildList();
+}
+
+function filterBlood(target) {
+  filterSelectedBlood = target.value;
   buildList();
 }
 
@@ -180,11 +189,15 @@ function search() {
     .toLowerCase();
 
   const filteredList = allStudents.filter((student) => {
-    const fullname = `${student.firstName} ${student.lastName}`;
-    return fullname.toLowerCase().includes(searchTerm);
+    const fullName = `${student.firstName} ${student.lastName}`;
+    return (
+      student.firstName.toLowerCase().includes(searchTerm) ||
+      student.lastName.toLowerCase().includes(searchTerm) ||
+      fullName.toLowerCase().includes(searchTerm)
+    );
   });
 
-  displayList(filteredList);
+  buildList(filteredList);
 }
 
 function buildList() {
@@ -219,6 +232,8 @@ function displayStudent(student) {
     student.middleName;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
+  clone.querySelector("[data-field=blood]").textContent = student.bloodType;
+
   if (student.star) {
     clone.querySelector("[data-field=star]").textContent = "⭐";
   } else {

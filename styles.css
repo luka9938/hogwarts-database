@@ -16,11 +16,25 @@
 
 #list {
   border-collapse: collapse;
+  width: 100%;
 }
 
 #list tbody tr td {
-  padding: 4px;
-  
+  padding: 10px;
+  text-align: center;
+}
+
+#sorting th:nth-child(1),
+#sorting th:nth-child(5) {
+  width: 10%;
+}
+
+#sorting th:nth-child(2),
+#sorting th:nth-child(3),
+#sorting th:nth-child(4),
+#sorting th:nth-child(6),
+#sorting th:nth-child(7) {
+  width: 15%;
 }
 
 #list tbody tr:nth-child(odd) td {
@@ -29,6 +43,15 @@
 }
 
 #list tbody tr:nth-child(even) td {
-
   border-right: rgb(171, 219, 252) 1px dotted;
+}
+
+.grid_1-1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 2px solid black;
+}
+
+.col {
+  border: 2px solid black;
 }

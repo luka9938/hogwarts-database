@@ -7,112 +7,118 @@
     <title>Studentbase</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <h1>Students</h1>
-    <p>
-      Filter:
-      <select
-        class="filter"
-        data-action="filter"
-        data-filter="gender"
-        name="gender"
-        id="gender"
-        onchange="filterGender(this)"
-      >
-        <option value="alt" disabled selected hidden>Gender</option>
-        <option value="all">All</option>
-        <option value="Boy">Boys</option>
-        <option value="Girl">Girls</option>
-      </select>
-      <select
-        class="filter"
-        data-action="filter"
-        data-filter="house"
-        name="house"
-        id="house"
-        onchange="filterHouse(this)"
-      >
-        <option value="alt" disabled selected hidden>House</option>
-        <option value="all">All</option>
-        <option value="Gryffindor">Gryffindor</option>
-        <option value="Hufflepuff">Hufflepuff</option>
-        <option value="Ravenclaw">Ravenclaw</option>
-        <option value="Slytherin">Slytherin</option>
-      </select>
-      <select
-        class="filter"
-        data-action="filter"
-        data-filter="blood"
-        name="blood"
-        id="blood"
-        onchange="filterBlood(this)"
-      >
-        <option value="alt" disabled selected hidden>Blood</option>
-        <option value="all">All</option>
-        <option value="pure">Pure-blood</option>
-        <option value="half">Half-blood</option>
-      </select>
-      <button class="filter" data-action="filter" data-filter="star">
-        Only Stars
-      </button>
-      <input type="text" id="search" placeholder="Search" />
-      <button id="search-btn">Search</button>
-      <button class="filter" data-action="filter" data-filter="*">all</button>
-    </p>
+  <body class="grid_1-1">
+    <div class="col">
+      <h1>Students</h1>
+      <p>
+        Filter:
+        <select
+          class="filter"
+          data-action="filter"
+          data-filter="gender"
+          name="gender"
+          id="gender"
+          onchange="filterGender(this)"
+        >
+          <option value="alt" disabled selected hidden>Gender</option>
+          <option value="all">All</option>
+          <option value="Boy">Boys</option>
+          <option value="Girl">Girls</option>
+        </select>
+        <select
+          class="filter"
+          data-action="filter"
+          data-filter="house"
+          name="house"
+          id="house"
+          onchange="filterHouse(this)"
+        >
+          <option value="alt" disabled selected hidden>House</option>
+          <option value="all">All</option>
+          <option value="Gryffindor">Gryffindor</option>
+          <option value="Hufflepuff">Hufflepuff</option>
+          <option value="Ravenclaw">Ravenclaw</option>
+          <option value="Slytherin">Slytherin</option>
+        </select>
+        <select
+          class="filter"
+          data-action="filter"
+          data-filter="blood"
+          name="blood"
+          id="blood"
+          onchange="filterBlood(this)"
+        >
+          <option value="alt" disabled selected hidden>Blood</option>
+          <option value="all">All</option>
+          <option value="pure">Pure-blood</option>
+          <option value="half">Half-blood</option>
+        </select>
+        <button class="filter" data-action="filter" data-filter="star">
+          Only Stars
+        </button>
+        <input type="text" id="search" placeholder="Search" />
+        <button id="search-btn">Search</button>
+        <button class="filter" data-action="filter" data-filter="*">all</button>
+      </p>
 
-    <hr />
+      <hr />
 
-    <table id="list">
-      <thead>
-        <tr id="sorting">
-          <th data-action="sort" data-sort-direction="asc" data-sort="star">
-            Inquisitorial squad
-          </th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="lastname">
-            Lastname
-          </th>
-          <th
-            data-action="sort"
-            data-sort-direction="asc"
-            data-sort="firstname"
-          >
-            Firstname
-          </th>
-          <th
-            data-action="sort"
-            data-sort-direction="asc"
-            data-sort="middlename"
-          >
-            Middlename
-          </th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="gender">
-            Gender
-          </th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="house">
-            House
-          </th>
-          <th data-action="sort" data-sort-direction="asc" data-sort="blood">
-            Blood
-          </th>
+      <table id="list">
+        <thead>
+          <tr id="sorting">
+            <th data-action="sort" data-sort-direction="asc" data-sort="star">
+              Inquisitorial squad
+            </th>
+            <th
+              data-action="sort"
+              data-sort-direction="asc"
+              data-sort="lastname"
+            >
+              Lastname
+            </th>
+            <th
+              data-action="sort"
+              data-sort-direction="asc"
+              data-sort="firstname"
+            >
+              Firstname
+            </th>
+            <th
+              data-action="sort"
+              data-sort-direction="asc"
+              data-sort="middlename"
+            >
+              Middlename
+            </th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="gender">
+              Gender
+            </th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="house">
+              House
+            </th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="blood">
+              Blood
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- student template will be copied and inserted here -->
+        </tbody>
+      </table>
+
+      <template id="student">
+        <tr>
+          <td data-field="star">☆</td>
+          <td data-field="lastname">LASTNAME</td>
+          <td data-field="firstname">FIRSTNAME</td>
+          <td data-field="middlename">MIDDLENAME</td>
+          <td data-field="gender">GENDER</td>
+          <td data-field="house">HOUSE</td>
+          <td data-field="blood">BLOOD</td>
         </tr>
-      </thead>
-      <tbody>
-        <!-- student template will be copied and inserted here -->
-      </tbody>
-    </table>
-
-    <template id="student">
-      <tr>
-        <td data-field="star">☆</td>
-        <td data-field="lastname">LASTNAME</td>
-        <td data-field="firstname">FIRSTNAME</td>
-        <td data-field="middlename">MIDDLENAME</td>
-        <td data-field="gender">GENDER</td>
-        <td data-field="house">HOUSE</td>
-        <td data-field="blood">BLOOD</td>
-      </tr>
-    </template>
-
+      </template>
+    </div>
+    <div class="col"></div>
     <script src="script.js"></script>
   </body>
 </html>

@@ -189,15 +189,11 @@ function search() {
     .toLowerCase();
 
   const filteredList = allStudents.filter((student) => {
-    const fullName = `${student.firstName} ${student.lastName}`;
-    return (
-      student.firstName.toLowerCase().includes(searchTerm) ||
-      student.lastName.toLowerCase().includes(searchTerm) ||
-      fullName.toLowerCase().includes(searchTerm)
-    );
+    const fullname = `${student.firstName} ${student.lastName}`;
+    return fullname.toLowerCase().includes(searchTerm);
   });
 
-  buildList(filteredList);
+  displayList(filteredList);
 }
 
 function buildList() {

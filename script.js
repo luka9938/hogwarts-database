@@ -222,13 +222,15 @@ function displayStudent(student) {
     return;
   if (filterSelectedHouse != "all" && student.house != filterSelectedHouse)
     return;
+  if (filterSelectedBlood != "all" && student.blood != filterSelectedBlood)
+    return;
   clone.querySelector("[data-field=lastname]").textContent = student.lastName;
   clone.querySelector("[data-field=firstname]").textContent = student.firstName;
   clone.querySelector("[data-field=middlename]").textContent =
     student.middleName;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
-  clone.querySelector("[data-field=blood]").textContent = student.bloodType;
+  clone.querySelector("[data-field=blood]").textContent = student.blood;
 
   if (student.star) {
     clone.querySelector("[data-field=star]").textContent = "⭐";
@@ -237,6 +239,9 @@ function displayStudent(student) {
   }
 
   clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
+  clone
+    .querySelector(".student-container")
+    .addEventListener("click", () => visDetaljer(student));
 
   function clickStar() {
     if (student.star) {
@@ -247,6 +252,14 @@ function displayStudent(student) {
     buildList();
   }
 
+  function visDetaljer(student) {
+    popup.style.display = "flex";
+    popup.querySelector(".lastname").textContent = student.lastName;
+    popup.querySelector(".firstname").textContent = student.firstName;
+    popup.querySelector(".middlename").textContent = student.middleName;
+    popup.querySelector(".house").textContent = student.house;
+    popup.querySelector(".gender").textContent = student.gender;
+  }
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }

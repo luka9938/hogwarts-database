@@ -1,18 +1,20 @@
 "use strict";
-
-window.addEventListener("DOMContentLoaded", start);
+import { getBloodStatus } from "./scriptBlood.js";
 
 let allStudents = [];
 let filterSelectedGender = "all";
 let filterSelectedHouse = "all";
 let filterSelectedBlood = "all";
 
+start();
+
 // The prototype for all students:
 const Student = {
   fullname: "",
   house: "-unknown house-",
   gender: "",
-  star: false,
+  squad: false,
+  prefects: false,
 };
 
 const settings = {
@@ -108,8 +110,11 @@ function setFilter(filter) {
 
 function filterList(filteredList) {
   switch (settings.filterBy) {
-    case "star":
-      filteredList = allStudents.filter(isStar);
+    case "squad":
+      filteredList = allStudents.filter(isSquad);
+      break;
+    case "prefects":
+      filteredList = allStudents.filter(isPrefect);
       break;
     default:
       filteredList = allStudents;
@@ -118,8 +123,12 @@ function filterList(filteredList) {
   return filteredList;
 }
 
-function isStar(student) {
-  return student.star;
+function isPrefect(student) {
+  return student.prefects;
+}
+
+function isSquad(student) {
+  return student.squad;
 }
 
 function filterGender(target) {
@@ -211,6 +220,12 @@ function displayList(students) {
   students.forEach(displayStudent);
 }
 
+function showImage(firstName, lastName) {
+  return `images/${lastName.toLowerCase()}_${firstName
+    .charAt(0)
+    .toLowerCase()}.png`;
+}
+
 function displayStudent(student) {
   // create clone
   const clone = document
@@ -230,30 +245,58 @@ function displayStudent(student) {
     student.middleName;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
-  clone.querySelector("[data-field=blood]").textContent = student.blood;
+  clone.querySelector("[data-field=blood]").textContent = getBloodStatus(
+    student.lastName
+  );
 
-  if (student.star) {
-    clone.querySelector("[data-field=star]").textContent = "⭐";
+  if (student.squad) {
+    clone.querySelector("[data-field=squad]").textContent = "⭐";
   } else {
-    clone.querySelector("[data-field=star]").textContent = "☆";
+    clone.querySelector("[data-field=squad]").textContent = "☆";
   }
 
-  clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
-  clone
-    .querySelector(".student-container")
-    .addEventListener("click", () => visDetaljer(student));
+  if (student.prefects) {
+    clone.querySelector("[data-field=prefects]").textContent = "⭐";
+  } else {
+    clone.querySelector("[data-field=prefects]").textContent = "☆";
+  }
 
-  function clickStar() {
-    if (student.star) {
-      student.star = false;
+  clone
+    .querySelector("[data-field=squad]")
+    .addEventListener("click", clicksquad);
+  clone
+    .querySelector("[data-field=prefects]")
+    .addEventListener("click", clickPrefects);
+
+  function clicksquad() {
+    if (student.squad) {
+      student.squad = false;
     } else {
-      student.star = true;
+      student.squad = true;
     }
     buildList();
   }
 
+  function clickPrefects() {
+    if (student.prefect) {
+      student.prefects = false;
+    } else {
+      student.prefects = true;
+    }
+    buildList();
+  }
+
+  clone
+    .querySelector(".student-container")
+    .addEventListener("click", () => visDetaljer(student));
+
   function visDetaljer(student) {
     popup.style.display = "flex";
+    popup.querySelector(".picture").src = showImage(
+      student.firstName,
+      student.lastName
+    );
+    popup.querySelector(".picture").alt = student.lastName;
     popup.querySelector(".lastname").textContent = student.lastName;
     popup.querySelector(".firstname").textContent = student.firstName;
     popup.querySelector(".middlename").textContent = student.middleName;

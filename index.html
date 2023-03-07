@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Studentbase</title>
     <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="script.js"></script>
+    <script type="module" src="scriptBlood.js"></script>
   </head>
   <body class="grid_1-1">
     <div class="col">
@@ -53,8 +55,11 @@
           <option value="pure">Pure-blood</option>
           <option value="half">Half-blood</option>
         </select>
-        <button class="filter" data-action="filter" data-filter="star">
-          Only Stars
+        <button class="filter" data-action="filter" data-filter="squad">
+          Only I-Squad
+        </button>
+        <button class="filter" data-action="filter" data-filter="prefects">
+          Only Prefects
         </button>
         <input type="text" id="search" placeholder="Search" />
         <button id="search-btn">Search</button>
@@ -66,8 +71,15 @@
       <table id="list">
         <thead>
           <tr id="sorting">
-            <th data-action="sort" data-sort-direction="asc" data-sort="star">
-              Inquisitorial squad
+            <th
+              data-action="sort"
+              data-sort-direction="asc"
+              data-sort="prefects"
+            >
+              Prefects
+            </th>
+            <th data-action="sort" data-sort-direction="asc" data-sort="squad">
+              I-Squad
             </th>
             <th
               data-action="sort"
@@ -108,7 +120,8 @@
 
       <template id="student">
         <tr class="student-container">
-          <td data-field="star">☆</td>
+          <td data-field="prefects">☆</td>
+          <td data-field="squad">☆</td>
           <td data-field="lastname">LASTNAME</td>
           <td data-field="firstname">FIRSTNAME</td>
           <td data-field="middlename">MIDDLENAME</td>
@@ -123,7 +136,7 @@
         <article id="popup-article">
           <div id="luk"></div>
           <section class="popup-1">
-            <img class="picture" src="images/abbott_h.png" alt="" />
+            <img class="picture" src="" alt="" />
           </section>
           <section class="popup-2">
             <h2 class="lastname"></h2>
@@ -135,6 +148,5 @@
         </article>
       </section>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>

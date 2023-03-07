@@ -134,11 +134,6 @@ function isSquad(student) {
   return student.squad;
 }
 
-/* function filterGender(target) {
-  filterSelectedGender = target.value;
-  
-  buildList();
-} */
 function filterGender() {
   filterSelectedGender = document.querySelector("#gender").value;
   console.log(document.querySelector("#gender").value);

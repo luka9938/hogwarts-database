@@ -1,6 +1,6 @@
 "use strict";
 import { getBloodStatus } from "./scriptBlood.js";
-
+const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 let allStudents = [];
 let filterSelectedGender = "all";
 let filterSelectedHouse = "all";
@@ -41,12 +41,11 @@ function registerButtons() {
     .forEach((button) => button.addEventListener("click", selectSort));
 
   document.querySelector("#search-btn").addEventListener("click", search);
+  document.querySelector("#hack-btn").addEventListener("click", hackTheSystem);
 }
 
 async function loadJSON() {
-  const response = await fetch(
-    "https://petlatkea.dk/2021/hogwarts/students.json"
-  );
+  const response = await fetch(url);
   const jsonData = await response.json();
   // when loaded, prepare data objects
   prepareObjects(jsonData);
@@ -89,6 +88,7 @@ function prepareObject(jsonObject) {
   }
   student.house = capitalize(jsonObject.house);
   student.gender = capitalize(jsonObject.gender);
+  student.blood = getBloodStatus(student.lastName);
   return student;
 }
 
@@ -131,18 +131,18 @@ function isSquad(student) {
   return student.squad;
 }
 
-function filterGender(target) {
-  filterSelectedGender = target.value;
+function filterGender(gender) {
+  filterSelectedGender = gender.value;
   buildList();
 }
 
-function filterHouse(target) {
-  filterSelectedHouse = target.value;
+function filterHouse(house) {
+  filterSelectedHouse = house.value;
   buildList();
 }
 
-function filterBlood(target) {
-  filterSelectedBlood = target.value;
+function filterBlood(blood) {
+  filterSelectedBlood = blood.value;
   buildList();
 }
 
@@ -205,6 +205,19 @@ function search() {
   displayList(filteredList);
 }
 
+function hackTheSystem() {
+  student.firstName = "Lukas";
+  student.lastName = "Gravgaard";
+  student.house = "Huffelpuff";
+  student.gender = "Boy";
+
+  allStudents.push(student);
+  displayStudent(student);
+  document.getElementById("hack-btn").disabled = true;
+
+  buildList();
+}
+
 function buildList() {
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
@@ -245,10 +258,7 @@ function displayStudent(student) {
     student.middleName;
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
-  clone.querySelector("[data-field=blood]").textContent = getBloodStatus(
-    student.lastName
-  );
-
+  clone.querySelector("[data-field=blood]").textContent = student.blood;
   if (student.squad) {
     clone.querySelector("[data-field=squad]").textContent = "⭐";
   } else {

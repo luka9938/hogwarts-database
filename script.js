@@ -42,6 +42,9 @@ function registerButtons() {
 
   document.querySelector("#search-btn").addEventListener("click", search);
   document.querySelector("#hack-btn").addEventListener("click", hackTheSystem);
+  document.querySelector("#gender").addEventListener("change", filterGender);
+  document.querySelector("#house").addEventListener("change", filterHouse);
+  document.querySelector("#blood").addEventListener("change", filterBlood);
 }
 
 async function loadJSON() {
@@ -131,18 +134,25 @@ function isSquad(student) {
   return student.squad;
 }
 
-function filterGender(gender) {
-  filterSelectedGender = gender.value;
+/* function filterGender(target) {
+  filterSelectedGender = target.value;
+  
+  buildList();
+} */
+function filterGender() {
+  filterSelectedGender = document.querySelector("#gender").value;
+  console.log(document.querySelector("#gender").value);
+  buildList();
+}
+function filterHouse() {
+  filterSelectedHouse = document.querySelector("#house").value;
+  console.log(document.querySelector("#house").value);
   buildList();
 }
 
-function filterHouse(house) {
-  filterSelectedHouse = house.value;
-  buildList();
-}
-
-function filterBlood(blood) {
-  filterSelectedBlood = blood.value;
+function filterBlood() {
+  filterSelectedBlood = document.querySelector("#blood").value;
+  console.log(document.querySelector("#blood").value);
   buildList();
 }
 

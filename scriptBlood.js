@@ -14,13 +14,6 @@ async function loadJSON() {
     });
 }
 
-function capitalize(str) {
-  const trimmedStr = str.trim(); // remove leading/trailing whitespace
-  const firstChar = trimmedStr.charAt(0).toUpperCase();
-  const restOfString = trimmedStr.slice(1).toLowerCase();
-  return firstChar + restOfString;
-}
-
 export function getBloodStatus(lastName) {
   if (pure.includes(lastName)) {
     return "Pure";

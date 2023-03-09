@@ -2,9 +2,11 @@
 import { getBloodStatus } from "./scriptBlood.js";
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 let allStudents = [];
+let expelStudents = [];
 let filterSelectedGender = "all";
 let filterSelectedHouse = "all";
 let filterSelectedBlood = "all";
+let filterSelectedExpelled = "whitelist";
 
 start();
 
@@ -15,11 +17,12 @@ const Student = {
   gender: "",
   squad: false,
   prefects: false,
+  expelled: "",
 };
 
 const settings = {
   filterBy: "all",
-  sortBy: "lastname",
+  sortBy: "name",
   sortDir: "asc",
 };
 
@@ -45,6 +48,11 @@ function registerButtons() {
   document.querySelector("#gender").addEventListener("change", filterGender);
   document.querySelector("#house").addEventListener("change", filterHouse);
   document.querySelector("#blood").addEventListener("change", filterBlood);
+  document
+    .querySelector("#expelled")
+    .addEventListener("change", filterExpelled);
+
+  document.querySelector("#expel-btn").addEventListener("click", expelStudent);
 }
 
 async function loadJSON() {
@@ -92,6 +100,7 @@ function prepareObject(jsonObject) {
   student.house = capitalize(jsonObject.house);
   student.gender = capitalize(jsonObject.gender);
   student.blood = getBloodStatus(student.lastName);
+  student.expelled = "whitelist";
   return student;
 }
 
@@ -136,19 +145,24 @@ function isSquad(student) {
 
 function filterGender() {
   filterSelectedGender = document.querySelector("#gender").value;
-  console.log(document.querySelector("#gender").value);
   buildList();
 }
 function filterHouse() {
   filterSelectedHouse = document.querySelector("#house").value;
-  console.log(document.querySelector("#house").value);
   buildList();
 }
 
 function filterBlood() {
   filterSelectedBlood = document.querySelector("#blood").value;
-  console.log(document.querySelector("#blood").value);
   buildList();
+}
+
+function filterExpelled() {
+  if (filterSelectedExpelled.value === "whitelist") {
+    displayStudents(allStudents);
+  } else if (filterSelectedExpelled.value === "blacklist") {
+    displayStudents(expelStudents);
+  }
 }
 
 function selectSort(event) {
@@ -215,6 +229,7 @@ function hackTheSystem() {
   student.lastName = "Gravgaard";
   student.house = "Huffelpuff";
   student.gender = "Boy";
+  student.blood = "Pure";
 
   allStudents.push(student);
   displayStudent(student);
@@ -225,9 +240,14 @@ function hackTheSystem() {
 
 function buildList() {
   const currentList = filterList(allStudents);
+  const currentListExpel = filterList(expelStudents);
   const sortedList = sortList(currentList);
-
-  displayList(sortedList);
+  const sortedListExpel = sortList(currentListExpel);
+  if ((filterSelectedExpelled = "whitelist")) {
+    displayList(sortedList);
+  } else if ((filterSelectedExpelled = "blacklist")) {
+    displayList(sortedListExpel);
+  }
 }
 
 function displayList(students) {
@@ -244,6 +264,21 @@ function showImage(firstName, lastName) {
     .toLowerCase()}.png`;
 }
 
+function expelStudent() {
+  const popup = document.querySelector(".popup-2");
+  const studentName = popup.querySelector(".firstname").value;
+  const studentIndex = allStudents.findIndex(
+    (student) => student.name === studentName
+  );
+  if (studentIndex !== -1) {
+    const student = allStudents[studentIndex];
+    student.expelled = "Expelled";
+    expelStudents.push(student);
+    allStudents.splice(studentIndex, 1);
+    buildList();
+  }
+}
+
 function displayStudent(student) {
   // create clone
   const clone = document
@@ -257,6 +292,11 @@ function displayStudent(student) {
     return;
   if (filterSelectedBlood != "all" && student.blood != filterSelectedBlood)
     return;
+  if (
+    filterSelectedExpelled != "all" &&
+    student.expelled != filterSelectedExpelled
+  )
+    return;
   clone.querySelector("[data-field=lastname]").textContent = student.lastName;
   clone.querySelector("[data-field=firstname]").textContent = student.firstName;
   clone.querySelector("[data-field=middlename]").textContent =
@@ -264,6 +304,7 @@ function displayStudent(student) {
   clone.querySelector("[data-field=house]").textContent = student.house;
   clone.querySelector("[data-field=gender]").textContent = student.gender;
   clone.querySelector("[data-field=blood]").textContent = student.blood;
+  clone.querySelector("[data-field=expelled]").textContent = student.expelled;
   if (student.squad) {
     clone.querySelector("[data-field=squad]").textContent = "⭐";
   } else {

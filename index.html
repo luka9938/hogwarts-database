@@ -53,6 +53,17 @@
           <option value="Half">Half-blood</option>
           <option value="Muggle">Muggle</option>
         </select>
+        <select
+          class="filter"
+          data-action="filter"
+          data-filter="expelled"
+          name="expelled"
+          id="expelled"
+        >
+          <option value="whitelist" disabled selected hidden>White list</option>
+          <option value="whitelist">Whitelist</option>
+          <option value="blacklist">Blacklist</option>
+        </select>
         <button class="filter" data-action="filter" data-filter="squad">
           Only I-Squad
         </button>
@@ -126,6 +137,7 @@
           <td data-field="gender">GENDER</td>
           <td data-field="house">HOUSE</td>
           <td data-field="blood">BLOOD</td>
+          <td data-field="expelled" style="display: none"></td>
         </tr>
       </template>
       <button id="hack-btn">Hack the system</button>
@@ -143,6 +155,7 @@
             <h2 class="middlename"></h2>
             <h3 class="house"></h3>
             <h3 class="gender"></h3>
+            <button id="expel-btn">expel</button>
           </section>
         </article>
       </section>

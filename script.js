@@ -17,11 +17,12 @@ const Student = {
   gender: "",
   squad: false,
   prefects: false,
+  expelled: "",
 };
 
 const settings = {
   filterBy: "all",
-  sortBy: "name",
+  sortBy: "fullname",
   sortDir: "asc",
 };
 

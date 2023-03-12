@@ -17,7 +17,6 @@ const Student = {
   gender: "",
   squad: false,
   prefects: false,
-  expelled: "",
 };
 
 const settings = {

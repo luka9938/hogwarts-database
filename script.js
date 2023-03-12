@@ -125,7 +125,7 @@ function filterList(filteredList) {
       filteredList = allStudents.filter(isSquad);
       break;
     case "prefects":
-      filteredList = allStudents.filter(isPrefect);
+      filteredList = allStudents.filter(isPrefects);
       break;
     default:
       filteredList = allStudents;
@@ -134,7 +134,7 @@ function filterList(filteredList) {
   return filteredList;
 }
 
-function isPrefect(student) {
+function isPrefects(student) {
   return student.prefects;
 }
 
@@ -167,10 +167,6 @@ function filterExpelled() {
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
-
-  // find "old" sortby element, and remove .sortBy
-  const oldElement = document.querySelector(`[data-sort='${settings.sortBy}']`);
-  oldElement.classList.remove("sortby");
 
   // indicate active sort
   event.target.classList.add("sortby");
@@ -226,7 +222,7 @@ function search() {
 function hackTheSystem() {
   student.firstName = "Lukas";
   student.lastName = "Gravgaard";
-  student.house = "Huffelpuff";
+  student.house = "Hufflepuff";
   student.gender = "Boy";
   student.blood = "Pure";
 
@@ -333,7 +329,7 @@ function displayStudent(student) {
   }
 
   function clickPrefects() {
-    if (student.prefect) {
+    if (student.prefects) {
       student.prefects = false;
     } else {
       student.prefects = true;
@@ -351,11 +347,48 @@ function displayStudent(student) {
       student.firstName,
       student.lastName
     );
+    popup.querySelector(
+      ".house-picture"
+    ).src = `houses/${student.house.toLowerCase()}.png`;
     popup.querySelector(".picture").alt = student.lastName;
     popup.querySelector(".lastname").textContent = student.lastName;
     popup.querySelector(".firstname").textContent = student.firstName;
     popup.querySelector(".middlename").textContent = student.middleName;
     popup.querySelector(".house").textContent = student.house;
+    const list1 = popup.querySelectorAll(".house-color1");
+    const list2 = document.querySelectorAll(".house-color2");
+    if (student.house === "Gryffindor") {
+      for (let i = 0; i < list1.length; i++) {
+        list1[i].style.backgroundColor = "#5b120b";
+      }
+      for (let i = 0; i < list1.length; i++) {
+        list2[i].style.backgroundColor = "#b9813a";
+      }
+    } else if (student.house === "Hufflepuff") {
+      for (let i = 0; i < list1.length; i++) {
+        list1[i].style.backgroundColor = "#53483f";
+      }
+      for (let i = 0; i < list1.length; i++) {
+        list2[i].style.backgroundColor = "#b38f47";
+      }
+    } else if (student.house === "Ravenclaw") {
+      for (let i = 0; i < list1.length; i++) {
+        list1[i].style.backgroundColor = "#416e85";
+      }
+      for (let i = 0; i < list1.length; i++) {
+        list2[i].style.backgroundColor = "#c69360";
+      }
+    } else if (student.house === "Slytherin") {
+      for (let i = 0; i < list1.length; i++) {
+        list1[i].style.backgroundColor = "#2c6146";
+      }
+      for (let i = 0; i < list1.length; i++) {
+        list2[i].style.backgroundColor = "#c2b1b5";
+      }
+    } else {
+      popup.querySelectorAll(".house-color1").style.backgroundColor = "#000000";
+      popup.querySelectorAll(".house-color2").style.backgroundColor = "#000000";
+    }
     popup.querySelector(".gender").textContent = student.gender;
   }
   // append clone to list

@@ -9,156 +9,193 @@
     <script type="module" src="script.js"></script>
     <script type="module" src="scriptBlood.js"></script>
   </head>
-  <body class="grid_1-1">
-    <div class="col">
-      <h1>Students</h1>
-      <p>
-        Filter:
-        <select
-          class="filter"
-          data-action="filter"
-          data-filter="gender"
-          name="gender"
-          id="gender"
-        >
-          <option value="main" disabled selected hidden>Gender</option>
-          <option value="all">All</option>
-          <option value="Boy">Boys</option>
-          <option value="Girl">Girls</option>
-        </select>
-        <select
-          class="filter"
-          data-action="filter"
-          data-filter="house"
-          name="house"
-          id="house"
-        >
-          <option value="main" disabled selected hidden>House</option>
-          <option value="all">All</option>
-          <option value="Gryffindor">Gryffindor</option>
-          <option value="Hufflepuff">Hufflepuff</option>
-          <option value="Ravenclaw">Ravenclaw</option>
-          <option value="Slytherin">Slytherin</option>
-        </select>
-        <select
-          class="filter"
-          data-action="filter"
-          data-filter="blood"
-          name="blood"
-          id="blood"
-        >
-          <option value="main" disabled selected hidden>Blood</option>
-          <option value="all">All</option>
-          <option value="Pure">Pure-blood</option>
-          <option value="Half">Half-blood</option>
-          <option value="Muggle">Muggle</option>
-        </select>
-        <select
-          class="filter"
-          data-action="filter"
-          data-filter="expelled"
-          name="expelled"
-          id="expelled"
-        >
-          <option value="whitelist" disabled selected hidden>White list</option>
-          <option value="whitelist">Whitelist</option>
-          <option value="blacklist">Blacklist</option>
-        </select>
-        <button class="filter" data-action="filter" data-filter="squad">
-          Only I-Squad
-        </button>
-        <button class="filter" data-action="filter" data-filter="prefects">
-          Only Prefects
-        </button>
-        <input type="text" id="search" placeholder="Search" />
-        <button id="search-btn">Search</button>
-        <button class="filter" data-action="filter" data-filter="*">all</button>
-      </p>
+  <body>
+    <header>
+      <h1>Hogwarts Student Database</h1>
+    </header>
+    <div class="grid_1-1">
+      <div class="col">
+        <nav>
+          <button
+            id="all-reset"
+            class="filter"
+            data-action="filter"
+            data-filter="*"
+          >
+            all
+          </button>
+          <select
+            class="filter"
+            data-action="filter"
+            data-filter="gender"
+            name="gender"
+            id="gender"
+          >
+            <option value="main" disabled selected hidden>Gender</option>
+            <option value="all">All</option>
+            <option value="Boy">Boys</option>
+            <option value="Girl">Girls</option>
+          </select>
+          <select
+            class="filter"
+            data-action="filter"
+            data-filter="house"
+            name="house"
+            id="house"
+          >
+            <option value="main" disabled selected hidden>House</option>
+            <option value="all">All</option>
+            <option value="Gryffindor">Gryffindor</option>
+            <option value="Hufflepuff">Hufflepuff</option>
+            <option value="Ravenclaw">Ravenclaw</option>
+            <option value="Slytherin">Slytherin</option>
+          </select>
+          <select
+            class="filter"
+            data-action="filter"
+            data-filter="blood"
+            name="blood"
+            id="blood"
+          >
+            <option value="main" disabled selected hidden>Blood</option>
+            <option value="all">All</option>
+            <option value="Pure">Pure-blood</option>
+            <option value="Half">Half-blood</option>
+            <option value="Muggle">Muggle</option>
+          </select>
+          <select
+            class="filter"
+            data-action="filter"
+            data-filter="expelled"
+            name="expelled"
+            id="expelled"
+          >
+            <option value="whitelist" disabled selected hidden>
+              White list
+            </option>
+            <option value="whitelist">Whitelist</option>
+            <option value="blacklist">Blacklist</option>
+          </select>
+          <button class="filter" data-action="filter" data-filter="squad">
+            Only I-Squad
+          </button>
+          <button class="filter" data-action="filter" data-filter="prefects">
+            Only Prefects
+          </button>
+          <br />
+          <input type="text" id="search" placeholder="Search" />
+          <button id="search-btn">Search</button>
+        </nav>
 
-      <hr />
+        <hr />
 
-      <table id="list">
-        <thead>
-          <tr id="sorting">
-            <th
-              data-action="sort"
-              data-sort-direction="asc"
-              data-sort="prefects"
-            >
-              Prefects
-            </th>
-            <th data-action="sort" data-sort-direction="asc" data-sort="squad">
-              I-Squad
-            </th>
-            <th
-              data-action="sort"
-              data-sort-direction="asc"
-              data-sort="lastname"
-            >
-              Lastname
-            </th>
-            <th
-              data-action="sort"
-              data-sort-direction="asc"
-              data-sort="firstname"
-            >
-              Firstname
-            </th>
-            <th
-              data-action="sort"
-              data-sort-direction="asc"
-              data-sort="middlename"
-            >
-              Middlename
-            </th>
-            <th data-action="sort" data-sort-direction="asc" data-sort="gender">
-              Gender
-            </th>
-            <th data-action="sort" data-sort-direction="asc" data-sort="house">
-              House
-            </th>
-            <th data-action="sort" data-sort-direction="asc" data-sort="blood">
-              Blood
-            </th>
+        <table id="list">
+          <thead>
+            <tr id="sorting">
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="firstname"
+              >
+                Firstname
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="middlename"
+              >
+                Middlename
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="lastname"
+              >
+                Lastname
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="gender"
+              >
+                Gender
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="house"
+              >
+                House
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="blood"
+              >
+                Blood
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="prefects"
+              >
+                Prefects
+              </th>
+              <th
+                data-action="sort"
+                data-sort-direction="asc"
+                data-sort="squad"
+              >
+                I-Squad
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- student template will be copied and inserted here -->
+          </tbody>
+        </table>
+
+        <template id="student">
+          <tr class="student-container">
+            <td data-field="firstname">FIRSTNAME</td>
+            <td data-field="middlename">MIDDLENAME</td>
+            <td data-field="lastname">LASTNAME</td>
+            <td data-field="gender">GENDER</td>
+            <td data-field="house">HOUSE</td>
+            <td data-field="blood">BLOOD</td>
+            <td data-field="expelled" style="display: none"></td>
+            <td data-field="prefects">☆</td>
+            <td data-field="squad">☆</td>
           </tr>
-        </thead>
-        <tbody>
-          <!-- student template will be copied and inserted here -->
-        </tbody>
-      </table>
-
-      <template id="student">
-        <tr class="student-container">
-          <td data-field="prefects">☆</td>
-          <td data-field="squad">☆</td>
-          <td data-field="lastname">LASTNAME</td>
-          <td data-field="firstname">FIRSTNAME</td>
-          <td data-field="middlename">MIDDLENAME</td>
-          <td data-field="gender">GENDER</td>
-          <td data-field="house">HOUSE</td>
-          <td data-field="blood">BLOOD</td>
-          <td data-field="expelled" style="display: none"></td>
-        </tr>
-      </template>
-      <button id="hack-btn">Hack the system</button>
+        </template>
+        <button id="hack-btn">Hack the system</button>
+      </div>
+      <div class="col">
+        <section id="popup">
+          <article id="popup-article">
+            <div id="luk"></div>
+            <section class="popup-1">
+              <span class="house-color1 top-border"></span>
+              <div class="picture-container">
+                <img class="picture" src="" alt="" />
+                <img class="house-picture" src="" alt="" />
+              </div>
+              <span class="house-color1 bot-border"></span>
+            </section>
+            <section class="popup-2">
+              <span class="house-color2 top-border"></span>
+              <h2>Lastname: <span class="lastname"></span></h2>
+              <p>Firstname: <span class="firstname"></span></p>
+              <p>Middlename: <span class="middlename">None</span></p>
+              <p>House: <span class="house"></span></p>
+              <p>Gender: <span class="gender"></span></p>
+              <button id="expel-btn">expel</button>
+              <span class="house-color2 bot-border"></span>
+            </section>
+          </article>
+        </section>
+      </div>
     </div>
-    <div class="col">
-      <section id="popup">
-        <article id="popup-article">
-          <div id="luk"></div>
-          <section class="popup-1">
-            <img class="picture" src="" alt="" />
-          </section>
-          <section class="popup-2">
-            <p class="lastname"></p>
-            <p class="firstname"></p>
-            <p class="middlename"></p>
-            <p class="house"></p>
-            <p class="gender"></p>
-            <button id="expel-btn">expel</button>
-          </section>
-        </article>
-      </section>
-    </div>
+    <footer>Lukas Gravgaard</footer>
   </body>
 </html>
